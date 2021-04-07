@@ -5,16 +5,10 @@ import java.util.Set;
 
 import javax.validation.Valid;
 
-import org.slf4j.Logger;
-import org.slf4j.LoggerFactory;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.http.HttpStatus;
 import org.springframework.http.ResponseEntity;
 import org.springframework.security.authentication.AuthenticationManager;
-import org.springframework.security.authentication.UsernamePasswordAuthenticationToken;
-import org.springframework.security.core.Authentication;
-import org.springframework.security.core.context.SecurityContextHolder;
-import org.springframework.security.core.userdetails.UserDetails;
 import org.springframework.security.crypto.password.PasswordEncoder;
 import org.springframework.validation.BindingResult;
 import org.springframework.web.bind.annotation.CrossOrigin;
@@ -24,22 +18,19 @@ import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RestController;
 
 import com.tutorial.crud.dto.Mensaje;
-import com.tutorial.crud.security.dto.JwtDto;
-import com.tutorial.crud.security.dto.LoginUsuario;
 import com.tutorial.crud.security.dto.NuevoUsuario;
 import com.tutorial.crud.security.entity.Rol;
 import com.tutorial.crud.security.entity.Usuario;
 import com.tutorial.crud.security.enums.RolNombre;
-import com.tutorial.crud.security.jwt.JwtEntryPoint;
 import com.tutorial.crud.security.jwt.JwtProvider;
 import com.tutorial.crud.security.service.RolService;
 import com.tutorial.crud.security.service.UsuarioService;
 
 
 @RestController
-@RequestMapping("/auth")
+@RequestMapping("/auth2")
 @CrossOrigin
-public class AuthController {
+public class SecureController {
 	
 	@Autowired
 	PasswordEncoder passwordEncoder;
@@ -55,8 +46,8 @@ public class AuthController {
 	
 	@Autowired
 	JwtProvider jwtProvider;
-	private final static Logger logger = LoggerFactory.getLogger(JwtEntryPoint.class);
 	
+
 	@PostMapping("/nuevo")
 	public ResponseEntity<?> nuevo(@Valid @RequestBody NuevoUsuario nuevoUsuario,BindingResult bindingResult){
 		if(bindingResult.hasErrors()) {
@@ -78,23 +69,4 @@ public class AuthController {
 		usuarioService.save(usuario);
 		return new ResponseEntity(new Mensaje("usuario guardado"),HttpStatus.CREATED);	
 	}
-	
-	@PostMapping("/login")
-	public ResponseEntity<JwtDto> login(@Valid @RequestBody LoginUsuario loginUsuario, BindingResult bindingResult){
-		if(bindingResult.hasErrors()) 
-			return new ResponseEntity(new Mensaje("campos mal puestos en el metodo"),HttpStatus.BAD_REQUEST);
-		logger.error("antes del atentication");
-		Authentication authentication = 
-				authenticationManager.authenticate(
-						new UsernamePasswordAuthenticationToken(loginUsuario.getNombreUsuario(), loginUsuario.getPassword()));
-		logger.error("despues del atentication");
-		SecurityContextHolder.getContext().setAuthentication(authentication);
-		String jwt =jwtProvider.generateToken(authentication);
-		UserDetails userDetails = (UserDetails)authentication.getPrincipal();
-		JwtDto jwtDto = new JwtDto(jwt, userDetails.getUsername(), userDetails.getAuthorities());
-		return new ResponseEntity<>(jwtDto,HttpStatus.OK);	
-	}
-	
-
-
 }

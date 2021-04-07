@@ -17,7 +17,6 @@ public class UsuarioPrincipal implements UserDetails{
 	
 	public UsuarioPrincipal(String nombre, String nombreUsuario, String email, String password,
 			Collection<? extends GrantedAuthority> authorities) {
-		super();
 		this.nombre = nombre;
 		this.nombreUsuario = nombreUsuario;
 		this.email = email;
@@ -61,7 +60,6 @@ public class UsuarioPrincipal implements UserDetails{
 	}
 	@Override
 	public boolean isEnabled() {
-		// TODO Auto-generated method stub
 		return true;
 	}
 	public String getNombre() {
@@ -76,7 +74,5 @@ public class UsuarioPrincipal implements UserDetails{
 	public void setEmail(String email) {
 		this.email = email;
 	}
-	
-	
 	
 }
