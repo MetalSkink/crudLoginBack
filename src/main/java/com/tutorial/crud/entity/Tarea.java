@@ -50,8 +50,25 @@ public class Tarea {
 	public String getDescripcion() {return descripcion;}
 	public void setDescripcion(String descripcion) {this.descripcion = descripcion;}
 	
+	//Constructor
+	
+	public Tarea() {
+	}
+	
 	//setters y getters
 	
+		public Tarea(String nombreTarea, Integer idAsociado, Integer idUsuarioTarea, 
+			Status status, Accion accion, Columna columna, String descripcion) {
+		super();
+		this.nombreTarea = nombreTarea;
+		this.idAsociado = idAsociado;
+		this.idUsuarioTarea = idUsuarioTarea;
+		//this.bitacoras = bitacoras;
+		this.status = status;
+		this.accion = accion;
+		this.columna = columna;
+		this.descripcion = descripcion;
+	}
 		public Integer getIdTarea() {
 			return idTarea;
 		}

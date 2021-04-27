@@ -32,9 +32,22 @@ public class Bitacora {
 	@Column(name= "horas_totales")
 	private Integer horasTotales;
 
-	//getters y setters
+	//Constructor
 	
-	//setters y getters
+	public Bitacora() {
+	}
+	
+	public Bitacora(Integer idTareaAsoc, Date horaInicio, Date horaFin, Integer horasTotales) {
+		super();
+		this.idTareaAsoc = idTareaAsoc;
+		this.horaInicio = horaInicio;
+		this.horaFin = horaFin;
+		this.horasTotales = horasTotales;
+	}
+
+
+
+		//setters y getters
 		public Integer getIdBitacora() {
 			return idBitacora;
 		}

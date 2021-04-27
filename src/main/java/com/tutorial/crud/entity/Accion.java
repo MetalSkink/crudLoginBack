@@ -17,6 +17,17 @@ public class Accion {
 	
 	@Column(name="nombreStatus",length = 200,nullable = false)
 	private String nombreAccion;
+	
+	public Accion() {
+		
+	}
+
+	public Accion(String nombreAccion) {
+		super();
+		this.nombreAccion = nombreAccion;
+	}
+
+
 
 	public Integer getIdAccion() {
 		return idAccion;

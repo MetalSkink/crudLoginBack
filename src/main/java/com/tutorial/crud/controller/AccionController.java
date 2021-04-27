@@ -1,6 +1,5 @@
 package com.tutorial.crud.controller;
 
-import java.net.URI;
 import java.util.List;
 
 import org.apache.commons.lang3.StringUtils;
@@ -16,62 +15,61 @@ import org.springframework.web.bind.annotation.PutMapping;
 import org.springframework.web.bind.annotation.RequestBody;
 import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RestController;
-import org.springframework.web.servlet.support.ServletUriComponentsBuilder;
 
+import com.tutorial.crud.dto.AccionDto;
 import com.tutorial.crud.dto.Mensaje;
-import com.tutorial.crud.dto.ProyectoDto;
-import com.tutorial.crud.entity.Proyecto;
-import com.tutorial.crud.service.ProyectoService;
+import com.tutorial.crud.entity.Accion;
+import com.tutorial.crud.service.AccionService;
 
 @RestController
-@RequestMapping("/proyectos")
+@RequestMapping("/acciones")
 @CrossOrigin(origins = "http://localhost:4200")
-public class ProyectoController {
-	
+public class AccionController {
+
 	@Autowired
-	ProyectoService proyectoService;
-	
+	AccionService accionService;
+
 	@GetMapping
-	public ResponseEntity<List<Proyecto>> list(){
-		List<Proyecto> list = proyectoService.list();
+	public ResponseEntity<List<Accion>> list(){
+		List<Accion> list = accionService.list();
 		return new ResponseEntity<>(list,HttpStatus.OK);
 	}
 	
 	@GetMapping("/{id}")
-	public ResponseEntity<Proyecto> getById(@PathVariable("id") int id){
-		if(!proyectoService.existsById(id))
+	public ResponseEntity<Accion> getById(@PathVariable("id") int id){
+		if(!accionService.existsById(id))
 			return new ResponseEntity(new Mensaje("no existe"), HttpStatus.NOT_FOUND);
-		Proyecto proyecto = proyectoService.getOne(id).get();
-		return new ResponseEntity<Proyecto>(proyecto, HttpStatus.OK);
+		Accion accion = accionService.getOne(id).get();
+		return new ResponseEntity<Accion>(accion, HttpStatus.OK);
 	}
 	
 	@PostMapping
-	public ResponseEntity<?> create(@RequestBody ProyectoDto proyectoDto){
-		if(StringUtils.isBlank(proyectoDto.getNombreProyecto()))
+	public ResponseEntity<?> create(@RequestBody AccionDto accionDto){
+		if(StringUtils.isBlank(accionDto.getNombreAccion()))
 			return new ResponseEntity(new Mensaje("el nombre es obligatorio"), HttpStatus.BAD_REQUEST);
-		Proyecto proyecto = new Proyecto(proyectoDto.getNombreProyecto());
-		proyectoService.save(proyecto);
+		Accion accion = new Accion(accionDto.getNombreAccion());
+		accionService.save(accion);
 		return new ResponseEntity(new Mensaje("proyecto creado"), HttpStatus.OK);
 	}
 	
 	@DeleteMapping("/{id}")
 	public ResponseEntity<?> delete(@PathVariable("id")int id){
-		if(!proyectoService.existsById(id))
+		if(!accionService.existsById(id))
 			return new ResponseEntity(new Mensaje("no existe"), HttpStatus.NOT_FOUND);
-		proyectoService.delete(id);
+		accionService.delete(id);
 		return new ResponseEntity(new Mensaje("producto eliminado"), HttpStatus.OK);
 	}
 	
 	@PutMapping("/{id}")
-	public ResponseEntity<?> update(@PathVariable("id")int id, @RequestBody ProyectoDto proyectoDto){
-		if(!proyectoService.existsById(id))
+	public ResponseEntity<?> update(@PathVariable("id")int id, @RequestBody AccionDto accionDto){
+		if(!accionService.existsById(id))
 			return new ResponseEntity(new Mensaje("no existe"), HttpStatus.NOT_FOUND);
-		if(StringUtils.isBlank(proyectoDto.getNombreProyecto()))
+		if(StringUtils.isBlank(accionDto.getNombreAccion()))
 			return new ResponseEntity(new Mensaje("el nombre es obligatorio"), HttpStatus.BAD_REQUEST);
-		Proyecto proyecto = proyectoService.getOne(id).get();
-		proyecto.setNombreProyecto(proyectoDto.getNombreProyecto());
-		proyectoService.save(proyecto);
+		Accion accion = accionService.getOne(id).get();
+		accion.setNombreAccion(accionDto.getNombreAccion());
+		accionService.save(accion);
 		return new ResponseEntity(new Mensaje("producto actualizado"), HttpStatus.OK);
 	}
-	
+
 }
