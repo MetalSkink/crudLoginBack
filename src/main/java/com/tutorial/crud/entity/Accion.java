@@ -23,7 +23,6 @@ public class Accion {
 	}
 
 	public Accion(String nombreAccion) {
-		super();
 		this.nombreAccion = nombreAccion;
 	}
 

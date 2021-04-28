@@ -3,6 +3,7 @@ package com.tutorial.crud.controller;
 import java.util.List;
 
 import org.apache.commons.lang3.StringUtils;
+import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.http.HttpStatus;
 import org.springframework.http.ResponseEntity;
 import org.springframework.web.bind.annotation.CrossOrigin;
@@ -26,6 +27,8 @@ import com.tutorial.crud.service.TareaService;
 @RequestMapping("/tareas")
 @CrossOrigin(origins = "http://localhost:4200")
 public class TareaController {
+	
+	@Autowired
 	TareaService tareaService;
 	
 	@GetMapping
@@ -46,8 +49,8 @@ public class TareaController {
 	public ResponseEntity<?> create(@RequestBody TareaDto tareaDto){
 		if(StringUtils.isBlank(tareaDto.getNombreTarea()))
 			return new ResponseEntity(new Mensaje("el nombre es obligatorio"), HttpStatus.BAD_REQUEST);
-		if(StringUtils.isBlank(tareaDto.getDescripcion()))
-			return new ResponseEntity(new Mensaje("el id asociado es obligatorio"), HttpStatus.BAD_REQUEST);			
+		//if(StringUtils.isBlank(tareaDto.getIdAsociado()))
+			//return new ResponseEntity(new Mensaje("el id asociado es obligatorio"), HttpStatus.BAD_REQUEST);			
 		Tarea tarea = new Tarea(tareaDto.getNombreTarea(),tareaDto.getIdAsociado(),tareaDto.getIdUsuarioTarea(),tareaDto.getStatus(),tareaDto.getAccion(),tareaDto.getColumna(),tareaDto.getDescripcion());
 		tareaService.save(tarea);
 		return new ResponseEntity(new Mensaje("tarea creada"), HttpStatus.OK);

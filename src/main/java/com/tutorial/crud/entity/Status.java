@@ -16,6 +16,13 @@ public class Status {
 	
 	@Column(name="nombreStatus",length = 200,nullable = false)
 	private String nombreStatus;
+	
+	public Status() {
+	}
+
+	public Status(String nombreStatus) {
+		this.nombreStatus = nombreStatus;
+	}
 
 	public Integer getIdStatus() {
 		return idStatus;

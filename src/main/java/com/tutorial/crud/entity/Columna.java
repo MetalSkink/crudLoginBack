@@ -17,7 +17,19 @@ public class Columna {
 	
 	@Column(name="nombreColumna",length = 100,nullable = false)
 	private String nombreColumna;
+	
+	//ConstructoresSS
+	public Columna() {
+		
+	}
+	
+	public Columna(String nombreColumna) {
+		super();
+		this.nombreColumna = nombreColumna;
+	}
 
+	//getters y setters
+	
 	public Integer getIdColumna() {
 		return idColumna;
 	}
