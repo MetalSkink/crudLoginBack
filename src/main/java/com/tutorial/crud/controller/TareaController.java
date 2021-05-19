@@ -19,7 +19,9 @@ import org.springframework.web.bind.annotation.RestController;
 import com.tutorial.crud.dto.Mensaje;
 import com.tutorial.crud.dto.ProyectoDto;
 import com.tutorial.crud.dto.TareaDto;
+import com.tutorial.crud.entity.Columna;
 import com.tutorial.crud.entity.Proyecto;
+import com.tutorial.crud.entity.Status;
 import com.tutorial.crud.entity.Tarea;
 import com.tutorial.crud.service.TareaService;
 
@@ -81,4 +83,99 @@ public class TareaController {
 		tareaService.save(tarea);
 		return new ResponseEntity(new Mensaje("producto actualizado"), HttpStatus.OK);
 	}
+	
+	@PutMapping("/bajar/{id}")
+	public ResponseEntity<?> bajar(@PathVariable("id")int id, @RequestBody TareaDto tareaDto){
+		if(!tareaService.existsById(id))
+			return new ResponseEntity(new Mensaje("no existe la tarea con ese ID"), HttpStatus.NOT_FOUND);
+		if(StringUtils.isBlank(tareaDto.getNombreTarea()))
+			return new ResponseEntity(new Mensaje("el nombre es obligatorio"), HttpStatus.BAD_REQUEST);
+		Tarea tarea = tareaService.getOne(id).get();
+		tarea.setNombreTarea(tareaDto.getNombreTarea());
+		tarea.setIdAsociado(tareaDto.getIdAsociado());
+		tarea.setIdUsuarioTarea(tareaDto.getIdUsuarioTarea());
+		tarea.setStatus(tareaDto.getStatus());
+		tarea.setAccion(tareaDto.getAccion());
+		//nueva Columna
+		Columna nuevaColumna= tareaDto.getColumna();
+		nuevaColumna.setIdColumna(nuevaColumna.getIdColumna()-1);
+		tarea.setColumna(nuevaColumna);
+		tarea.setDescripcion(tareaDto.getDescripcion());
+		tareaService.save(tarea);
+		return new ResponseEntity(new Mensaje("producto actualizado"), HttpStatus.OK);
+	}
+	
+	@PutMapping("/subir/{id}")
+	public ResponseEntity<?> subir(@PathVariable("id")int id, @RequestBody TareaDto tareaDto){
+		if(!tareaService.existsById(id))
+			return new ResponseEntity(new Mensaje("no existe la tarea con ese ID"), HttpStatus.NOT_FOUND);
+		if(StringUtils.isBlank(tareaDto.getNombreTarea()))
+			return new ResponseEntity(new Mensaje("el nombre es obligatorio"), HttpStatus.BAD_REQUEST);
+		Tarea tarea = tareaService.getOne(id).get();
+		tarea.setNombreTarea(tareaDto.getNombreTarea());
+		tarea.setIdAsociado(tareaDto.getIdAsociado());
+		tarea.setIdUsuarioTarea(tareaDto.getIdUsuarioTarea());
+		tarea.setStatus(tareaDto.getStatus());
+		tarea.setAccion(tareaDto.getAccion());
+		//nueva Columna
+		Columna nuevaColumna= tareaDto.getColumna();
+		nuevaColumna.setIdColumna(nuevaColumna.getIdColumna()+1);
+		tarea.setColumna(nuevaColumna);
+		tarea.setDescripcion(tareaDto.getDescripcion());
+		tareaService.save(tarea);
+		return new ResponseEntity(new Mensaje("tarea actualizada"), HttpStatus.OK);
+	}
+	
+	@PutMapping("/progreso/{id}")
+	public ResponseEntity<?> statusProgreso(@PathVariable("id")int id, @RequestBody TareaDto tareaDto){
+		if(!tareaService.existsById(id))
+			return new ResponseEntity(new Mensaje("no existe la tarea con ese ID"), HttpStatus.NOT_FOUND);
+		if(StringUtils.isBlank(tareaDto.getNombreTarea()))
+			return new ResponseEntity(new Mensaje("el nombre es obligatorio"), HttpStatus.BAD_REQUEST);
+		Tarea tarea = tareaService.getOne(id).get();
+		tarea.setNombreTarea(tareaDto.getNombreTarea());
+		tarea.setIdAsociado(tareaDto.getIdAsociado());
+		tarea.setIdUsuarioTarea(tareaDto.getIdUsuarioTarea());
+		//tarea.setStatus(tareaDto.getStatus());
+		tarea.setAccion(tareaDto.getAccion());
+		tarea.setColumna(tareaDto.getColumna());
+		//nuevo status
+		Status nuevoStatus = tareaDto.getStatus();
+		//Columna nuevaColumna= tareaDto.getColumna();
+		//nuevaColumna.setIdColumna(nuevaColumna.getIdColumna()+1);
+		nuevoStatus.setIdStatus(2);
+		tarea.setStatus(nuevoStatus);
+		//tarea.setColumna(nuevaColumna);
+		tarea.setDescripcion(tareaDto.getDescripcion());
+		tareaService.save(tarea);
+		return new ResponseEntity(new Mensaje("tarea actualizada"), HttpStatus.OK);
+	}
+	
+	@PutMapping("/pausar/{id}")
+	public ResponseEntity<?> statusPausar(@PathVariable("id")int id, @RequestBody TareaDto tareaDto){
+		if(!tareaService.existsById(id))
+			return new ResponseEntity(new Mensaje("no existe la tarea con ese ID"), HttpStatus.NOT_FOUND);
+		if(StringUtils.isBlank(tareaDto.getNombreTarea()))
+			return new ResponseEntity(new Mensaje("el nombre es obligatorio"), HttpStatus.BAD_REQUEST);
+		Tarea tarea = tareaService.getOne(id).get();
+		tarea.setNombreTarea(tareaDto.getNombreTarea());
+		tarea.setIdAsociado(tareaDto.getIdAsociado());
+		tarea.setIdUsuarioTarea(tareaDto.getIdUsuarioTarea());
+		//tarea.setStatus(tareaDto.getStatus());
+		tarea.setAccion(tareaDto.getAccion());
+		tarea.setColumna(tareaDto.getColumna());
+		//nuevo status
+		Status nuevoStatus = tareaDto.getStatus();
+		//Columna nuevaColumna= tareaDto.getColumna();
+		//nuevaColumna.setIdColumna(nuevaColumna.getIdColumna()+1);
+		nuevoStatus.setIdStatus(3);
+		tarea.setStatus(nuevoStatus);
+		//tarea.setColumna(nuevaColumna);
+		tarea.setDescripcion(tareaDto.getDescripcion());
+		tareaService.save(tarea);
+		return new ResponseEntity(new Mensaje("tarea actualizada"), HttpStatus.OK);
+	}
+	
+	
+	
 }

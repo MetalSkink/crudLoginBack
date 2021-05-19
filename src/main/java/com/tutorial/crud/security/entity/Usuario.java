@@ -1,8 +1,11 @@
 package com.tutorial.crud.security.entity;
 
+import java.util.ArrayList;
 import java.util.HashSet;
+import java.util.List;
 import java.util.Set;
 
+import javax.persistence.CascadeType;
 import javax.persistence.Column;
 import javax.persistence.Entity;
 import javax.persistence.FetchType;
@@ -12,7 +15,10 @@ import javax.persistence.Id;
 import javax.persistence.JoinColumn;
 import javax.persistence.JoinTable;
 import javax.persistence.ManyToMany;
+import javax.persistence.OneToMany;
 import javax.validation.constraints.NotNull;
+
+import com.tutorial.crud.entity.Tarea;
 
 @Entity
 public class Usuario {
@@ -28,6 +34,11 @@ public class Usuario {
 	private String email;
 	@NotNull
 	private String password;
+	
+	@OneToMany(cascade=CascadeType.ALL)
+	@JoinColumn(name="idUsuarioTarea")
+	private List<Tarea> tareas =new ArrayList<>();
+	
 	@NotNull
 	@ManyToMany(fetch = FetchType.EAGER)
 	@JoinTable(name= "usuario_rol", joinColumns = @JoinColumn(name= "usuario_id"),inverseJoinColumns = @JoinColumn(name = "rol_id"))
@@ -104,6 +115,15 @@ public class Usuario {
 	public void setRoles(Set<Rol> roles) {
 		this.roles = roles;
 	}
+
+	public List<Tarea> getTareas() {
+		return tareas;
+	}
+
+	public void setTareas(List<Tarea> tareas) {
+		this.tareas = tareas;
+	}
+	
 	
 	
 	

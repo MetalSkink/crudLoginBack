@@ -11,12 +11,12 @@ public class BitacoraDto {
 	
 	private Date horaInicio;
 	private Date horaFin;
-	private Integer horasTotales;
+	private Long horasTotales;
 	
 	public BitacoraDto() {
 	}
 
-	public BitacoraDto(@NotBlank Integer idTareaAsoc, Date horaInicio, Date horaFin, Integer horasTotales) {
+	public BitacoraDto(@NotBlank Integer idTareaAsoc, Date horaInicio, Date horaFin, Long horasTotales) {
 		super();
 		this.idTareaAsoc = idTareaAsoc;
 		this.horaInicio = horaInicio;
@@ -48,11 +48,11 @@ public class BitacoraDto {
 		this.horaFin = horaFin;
 	}
 
-	public Integer getHorasTotales() {
+	public Long getHorasTotales() {
 		return horasTotales;
 	}
 
-	public void setHorasTotales(Integer horasTotales) {
+	public void setHorasTotales(Long horasTotales) {
 		this.horasTotales = horasTotales;
 	}
 	

@@ -21,24 +21,22 @@ public class Bitacora {
 	@Column(name="idTareaAsoc",nullable = false)
 	private Integer idTareaAsoc;
 	
-	@Temporal(TemporalType.TIMESTAMP)
+	//@Temporal(TemporalType.TIMESTAMP)
 	@Column(name= "hora_inicio", nullable=false)
 	private Date horaInicio;
 	
-	@Temporal(TemporalType.TIMESTAMP)
-	@Column(name= "hora_fin", nullable=false)
+	@Column(name= "hora_fin")
 	private Date horaFin;
 	
 	@Column(name= "horas_totales")
-	private Integer horasTotales;
+	private Long horasTotales;
 
 	//Constructor
 	
 	public Bitacora() {
 	}
 	
-	public Bitacora(Integer idTareaAsoc, Date horaInicio, Date horaFin, Integer horasTotales) {
-		super();
+	public Bitacora(Integer idTareaAsoc, Date horaInicio, Date horaFin, Long horasTotales) {
 		this.idTareaAsoc = idTareaAsoc;
 		this.horaInicio = horaInicio;
 		this.horaFin = horaFin;
@@ -80,11 +78,11 @@ public class Bitacora {
 			this.horaFin = horaFin;
 		}
 
-		public Integer getHorasTotales() {
+		public Long getHorasTotales() {
 			return horasTotales;
 		}
 
-		public void setHorasTotales(Integer horasTotales) {
+		public void setHorasTotales(Long horasTotales) {
 			this.horasTotales = horasTotales;
 		}
 }

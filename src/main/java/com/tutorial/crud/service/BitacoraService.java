@@ -40,4 +40,8 @@ public class BitacoraService {
 	public boolean existsById(int id) {
 		return bitacoraRepository.existsById(id);
 	}
+	
+	public List<Bitacora> buscaBitacora(Integer id){
+		return bitacoraRepository.findByIdTareaAsoc(id);
+	}
 }
