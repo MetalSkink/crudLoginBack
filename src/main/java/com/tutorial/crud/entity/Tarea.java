@@ -23,7 +23,7 @@ public class Tarea {
 	@Column(name="nombreTarea",length = 150,nullable = false)
 	private String nombreTarea;
 	
-	@Column(name="idAsociado",nullable = false)
+	@Column(name="idAsociado",nullable = true)
 	private Integer idAsociado;
 
 	@Column(name="idUsuarioTarea")
@@ -50,7 +50,14 @@ public class Tarea {
 	public String getDescripcion() {return descripcion;}
 	public void setDescripcion(String descripcion) {this.descripcion = descripcion;}
 	
+	@Column(name="minutosAcumulados")
+	private Long minutosAcumulados;
+	public Long getMinutosAcumulados() {return minutosAcumulados;}
+	public void setMinutosAcumulados(Long minutosAcumulados) {this.minutosAcumulados = minutosAcumulados;}
+	
+	
 	//Constructor
+	
 	
 	public Tarea() {
 	}
@@ -58,8 +65,7 @@ public class Tarea {
 	//setters y getters
 	
 		public Tarea(String nombreTarea, Integer idAsociado, Integer idUsuarioTarea, 
-			Status status, Accion accion, Columna columna, String descripcion) {
-		super();
+			Status status, Accion accion, Columna columna, String descripcion, Long minutosAcumulados) {
 		this.nombreTarea = nombreTarea;
 		this.idAsociado = idAsociado;
 		this.idUsuarioTarea = idUsuarioTarea;
@@ -68,6 +74,7 @@ public class Tarea {
 		this.accion = accion;
 		this.columna = columna;
 		this.descripcion = descripcion;
+		this.minutosAcumulados = minutosAcumulados;
 	}
 		public Integer getIdTarea() {
 			return idTarea;

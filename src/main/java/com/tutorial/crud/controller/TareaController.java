@@ -6,6 +6,7 @@ import org.apache.commons.lang3.StringUtils;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.http.HttpStatus;
 import org.springframework.http.ResponseEntity;
+import org.springframework.security.access.prepost.PreAuthorize;
 import org.springframework.web.bind.annotation.CrossOrigin;
 import org.springframework.web.bind.annotation.DeleteMapping;
 import org.springframework.web.bind.annotation.GetMapping;
@@ -58,6 +59,7 @@ public class TareaController {
 		return new ResponseEntity(new Mensaje("tarea creada"), HttpStatus.OK);
 	}
 	
+	@PreAuthorize("hasRole('ADMIN')")
 	@DeleteMapping("/{id}")
 	public ResponseEntity<?> delete(@PathVariable("id")int id){
 		if(!tareaService.existsById(id))
@@ -81,7 +83,7 @@ public class TareaController {
 		tarea.setColumna(tareaDto.getColumna());
 		tarea.setDescripcion(tareaDto.getDescripcion());
 		tareaService.save(tarea);
-		return new ResponseEntity(new Mensaje("producto actualizado"), HttpStatus.OK);
+		return new ResponseEntity(new Mensaje("tarea actualizada"), HttpStatus.OK);
 	}
 	
 	@PutMapping("/bajar/{id}")
@@ -171,6 +173,48 @@ public class TareaController {
 		nuevoStatus.setIdStatus(3);
 		tarea.setStatus(nuevoStatus);
 		//tarea.setColumna(nuevaColumna);
+		tarea.setDescripcion(tareaDto.getDescripcion());
+		tareaService.save(tarea);
+		return new ResponseEntity(new Mensaje("tarea actualizada"), HttpStatus.OK);
+	}
+	
+	@PutMapping("/terminar/{id}")
+	public ResponseEntity<?> statusTerminar(@PathVariable("id")int id, @RequestBody TareaDto tareaDto){
+		if(!tareaService.existsById(id))
+			return new ResponseEntity(new Mensaje("no existe la tarea con ese ID"), HttpStatus.NOT_FOUND);
+		if(StringUtils.isBlank(tareaDto.getNombreTarea()))
+			return new ResponseEntity(new Mensaje("el nombre es obligatorio"), HttpStatus.BAD_REQUEST);
+		Tarea tarea = tareaService.getOne(id).get();
+		tarea.setNombreTarea(tareaDto.getNombreTarea());
+		tarea.setIdAsociado(tareaDto.getIdAsociado());
+		tarea.setIdUsuarioTarea(tareaDto.getIdUsuarioTarea());
+		tarea.setAccion(tareaDto.getAccion());
+		tarea.setColumna(tareaDto.getColumna());
+		//nuevo status
+		Status nuevoStatus = tareaDto.getStatus();
+		nuevoStatus.setIdStatus(4);
+		tarea.setStatus(nuevoStatus);
+		tarea.setDescripcion(tareaDto.getDescripcion());
+		tareaService.save(tarea);
+		return new ResponseEntity(new Mensaje("tarea actualizada"), HttpStatus.OK);
+	}
+	
+	@PutMapping("/cancelar/{id}")
+	public ResponseEntity<?> statusCancelar(@PathVariable("id")int id, @RequestBody TareaDto tareaDto){
+		if(!tareaService.existsById(id))
+			return new ResponseEntity(new Mensaje("no existe la tarea con ese ID"), HttpStatus.NOT_FOUND);
+		if(StringUtils.isBlank(tareaDto.getNombreTarea()))
+			return new ResponseEntity(new Mensaje("el nombre es obligatorio"), HttpStatus.BAD_REQUEST);
+		Tarea tarea = tareaService.getOne(id).get();
+		tarea.setNombreTarea(tareaDto.getNombreTarea());
+		tarea.setIdAsociado(tareaDto.getIdAsociado());
+		tarea.setIdUsuarioTarea(tareaDto.getIdUsuarioTarea());
+		tarea.setAccion(tareaDto.getAccion());
+		tarea.setColumna(tareaDto.getColumna());
+		//nuevo status
+		Status nuevoStatus = tareaDto.getStatus();
+		nuevoStatus.setIdStatus(5);
+		tarea.setStatus(nuevoStatus);
 		tarea.setDescripcion(tareaDto.getDescripcion());
 		tareaService.save(tarea);
 		return new ResponseEntity(new Mensaje("tarea actualizada"), HttpStatus.OK);

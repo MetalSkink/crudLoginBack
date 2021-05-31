@@ -18,7 +18,8 @@ public class Bitacora {
 	@GeneratedValue(strategy = GenerationType.IDENTITY)
 	private Integer idBitacora;
 	
-	@Column(name="idTareaAsoc",nullable = false)
+	//@Column(name="idTareaAsoc",nullable = false)
+	@Column(name="idTareaAsoc")
 	private Integer idTareaAsoc;
 	
 	//@Temporal(TemporalType.TIMESTAMP)

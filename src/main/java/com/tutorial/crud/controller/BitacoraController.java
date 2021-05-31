@@ -102,8 +102,8 @@ public class BitacoraController {
 		Date horaFin    = bitacoraFound.getHoraFin();
 
 		long diff = horaFin.getTime() - horaInicio.getTime();
-		//System.out.println(horaInicio);
-		//System.out.println(horaFin);
+		System.out.println(horaInicio);
+		System.out.println(horaFin);
 		TimeUnit time = TimeUnit.MINUTES; 
 		long diffrence = time.convert(diff, TimeUnit.MILLISECONDS);
 		//System.out.println(diff);
