@@ -65,7 +65,7 @@ public class Tarea {
 	//setters y getters
 	
 		public Tarea(String nombreTarea, Integer idAsociado, Integer idUsuarioTarea, 
-			Status status, Accion accion, Columna columna, String descripcion, Long minutosAcumulados) {
+			Status status, Accion accion, Columna columna, String descripcion) {
 		this.nombreTarea = nombreTarea;
 		this.idAsociado = idAsociado;
 		this.idUsuarioTarea = idUsuarioTarea;
@@ -74,7 +74,7 @@ public class Tarea {
 		this.accion = accion;
 		this.columna = columna;
 		this.descripcion = descripcion;
-		this.minutosAcumulados = minutosAcumulados;
+		this.minutosAcumulados = (long) 0;
 	}
 		public Integer getIdTarea() {
 			return idTarea;
